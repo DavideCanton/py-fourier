@@ -1,0 +1,1 @@
+Repo for my fourier series self-taught lessons
