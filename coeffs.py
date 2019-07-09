@@ -17,11 +17,16 @@ def f2(t, n, p):
     return np.imag(f(t, n, p))
 
 
-P = 2 * np.pi
+def main():
+    p = 2 * np.pi
 
-for n in range(0, 100):
-    r = quad(f1, 0, P, args=(n, P))[0] * (1 / P)
-    i = quad(f2, 0, P, args=(n, P))[0] * (1 / P)
-    if np.allclose([r, i], [0, 0]):
-        break
-    print(n, "->", complex(round(r, 2), round(i, 2)))
+    for n in range(0, 100):
+        r = quad(f1, 0, p, args=(n, p))[0] * (1 / p)
+        i = quad(f2, 0, p, args=(n, p))[0] * (1 / p)
+        if np.allclose([r, i], [0, 0]):
+            break
+        print(n, "->", complex(round(r, 2), round(i, 2)))
+
+
+if __name__ == '__main__':
+    main()

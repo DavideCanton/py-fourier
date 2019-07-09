@@ -1,6 +1,6 @@
-import os
 import pyglet
-from pyglet.gl import glBegin, GL_LINE_LOOP, glMatrixMode, GL_PROJECTION, glLoadIdentity, GL_MODELVIEW, glScalef, GL_LINES, glColor3f, glVertex2f, glEnd, GL_LINE_STRIP
+from pyglet.gl import glBegin, GL_LINE_LOOP, glMatrixMode, GL_PROJECTION, glLoadIdentity, GL_MODELVIEW, glScalef, \
+    GL_LINES, glColor3f, glVertex2f, glEnd, GL_LINE_STRIP
 import numpy as np
 
 W = 800
@@ -11,11 +11,11 @@ fps_display = pyglet.window.FPSDisplay(window)
 
 
 def sawtooth(n):
-    C0 = 0
-    coeffs = [1j * ((-1)**n) / (2 * n * np.pi) for n in range(1, n)]
-    coeffs_neg = [x.conjugate() for x in coeffs[::-1]]
-    coeffs = coeffs_neg + [C0] + coeffs
-    return coeffs, True
+    c0 = 0
+    coeffs_pos = [1j * ((-1) ** n) / (2 * n * np.pi) for n in range(1, n)]
+    coeffs_neg = [x.conjugate() for x in coeffs_pos[::-1]]
+    coeffs_pos = coeffs_neg + [c0] + coeffs_pos
+    return coeffs_pos, True
 
 
 def heart():
@@ -35,8 +35,8 @@ def draw_circle(x, y, r):
     glColor3f(255, 0, 0)
 
     for i in range(360):
-        degInRad = i / 180 * np.pi
-        glVertex2f(x + np.cos(degInRad) * r, y + np.sin(degInRad) * r)
+        deg_in_rad = i / 180 * np.pi
+        glVertex2f(x + np.cos(deg_in_rad) * r, y + np.sin(deg_in_rad) * r)
 
     glEnd()
 
@@ -68,9 +68,6 @@ def on_draw():
         p = draw_line_from(p[0], p[1], np.abs(e), np.angle(e))
     points.append(p)
 
-    with open("out.txt", "a") as f:
-        print(p, file=f)
-
     glBegin(GL_LINE_STRIP)
     glColor3f(255, 255, 255)
     for p in points:
@@ -85,9 +82,9 @@ def update(dt):
     T += dt
 
 
-try:
-    os.remove('out.txt')
-except FileNotFoundError:
-    pass
-pyglet.clock.schedule_interval(update, 1 / 60.0)
-pyglet.app.run()
+def main():
+    pyglet.clock.schedule_interval(update, 1 / 60.0)
+    pyglet.app.run()
+
+if __name__ == '__main__':
+    main()
