@@ -3,7 +3,8 @@ from scipy.integrate import quad
 
 
 def f(t, n, p):
-    c2 = 2 * (1 - np.cos(t)) * np.exp(1j * t)
+    # c2 = 2 * (1 - np.cos(t)) * np.exp(1j * t)
+    c2 = (2 - 2 * np.sin(t) + np.sin(t) * np.sqrt(np.abs(np.cos(t))) / (np.sin(t) + 1.4)) * np.exp(1j * t)
     c3 = np.exp(-2 * np.pi * n * t * 1j / p)
 
     return c2 * c3
@@ -19,13 +20,20 @@ def f2(t, n, p):
 
 def main():
     p = 2 * np.pi
+    l = []
+    s = -60
 
-    for n in range(0, 100):
+    for n in range(s, -s):
         r = quad(f1, 0, p, args=(n, p))[0] * (1 / p)
         i = quad(f2, 0, p, args=(n, p))[0] * (1 / p)
-        if np.allclose([r, i], [0, 0]):
-            break
-        print(n, "->", complex(round(r, 2), round(i, 2)))
+        l.append(complex(round(r, 6), round(i, 6)))
+
+    while l and np.isclose(np.abs(l[0]), 0) and np.isclose(np.abs(l[-1]), 0):
+        l = l[1:-1]
+        s += 1
+
+    print(l)
+    print(s)
 
 
 if __name__ == '__main__':

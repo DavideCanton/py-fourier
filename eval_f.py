@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-coeffs, has_neg = [-1, 2, -1], False
-start_index = -(len(coeffs) // 2) if has_neg else 0
+from fourier import heart2
+
+coeffs, start_index = heart2()
 p = 2 * np.pi
 
 x = np.linspace(0, 2 * np.pi, 100)
