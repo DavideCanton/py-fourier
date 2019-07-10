@@ -3,8 +3,10 @@ from scipy.integrate import quad
 
 
 def f(t, n, p):
-    # c2 = 2 * (1 - np.cos(t)) * np.exp(1j * t)
-    c2 = (2 - 2 * np.sin(t) + np.sin(t) * np.sqrt(np.abs(np.cos(t))) / (np.sin(t) + 1.4)) * np.exp(1j * t)
+    c = np.cos(t)
+    s = np.sin(t)
+
+    c2 = np.sqrt(2) * c / (s * s + 1) + 1j * np.sqrt(2) * c * s / (s*s+1)
     c3 = np.exp(-2 * np.pi * n * t * 1j / p)
 
     return c2 * c3

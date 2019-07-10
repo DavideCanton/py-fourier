@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from curves.heart2 import get_coeffs
+from curves.infinite import get_coeffs
 
-coeffs, start_index = get_coeffs
+coeffs, start_index = get_coeffs()
 p = 2 * np.pi
 
 x = np.linspace(0, 2 * np.pi, 100)

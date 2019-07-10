@@ -3,7 +3,7 @@ from pyglet.window import mouse
 from pyglet.gl import glBegin, GL_LINE_LOOP, glMatrixMode, GL_PROJECTION, glLoadIdentity, GL_MODELVIEW, glScalef, \
     GL_LINES, glColor3f, glVertex2f, glEnd, GL_LINE_STRIP, glTranslatef, glLineWidth, GL_TRIANGLES
 import numpy as np
-from curves.heart import get_coeffs
+from curves.infinite import get_coeffs
 
 W = 800
 H = 800
