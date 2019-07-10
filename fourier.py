@@ -1,7 +1,7 @@
 import pyglet
 from pyglet.window import mouse
 from pyglet.gl import glBegin, GL_LINE_LOOP, glMatrixMode, GL_PROJECTION, glLoadIdentity, GL_MODELVIEW, glScalef, \
-    GL_LINES, glColor3f, glVertex2f, glEnd, GL_LINE_STRIP, glTranslatef
+    GL_LINES, glColor3f, glVertex2f, glEnd, GL_LINE_STRIP, glTranslatef, glLineWidth, GL_TRIANGLES
 import numpy as np
 
 W = 800
@@ -45,15 +45,12 @@ def heart2():
             (0.001112 + 0j), 0.001511j, (-0.00105 + 0j), -0.001429j, (0.000994 + 0j), (-0 + 0.001354j),
             (-0.000943 + 0j)], -60
 
-
-T = 0
-coeffs, start_index = heart2()
 S = 0.9
 P = 2 * np.pi
 points = []
 DX = 0
 DY = 0
-ST = 2
+ST = 5
 
 
 def draw_circle(x, y, r):
@@ -70,9 +67,27 @@ def draw_circle(x, y, r):
 def draw_line_from(x, y, l, angle):
     x2 = x + l * np.cos(angle)
     y2 = y + l * np.sin(angle)
-    pyglet.graphics.draw(2, GL_LINES, ('v2f', (x, y, x2, y2)),
+    glLineWidth(2)
+    pyglet.graphics.draw(2, GL_LINES,
+                         ('v2f', (x, y, x2, y2)),
                          ('c3B', (0, 0, 255, 0, 0, 255)))
+    glLineWidth(1)
     draw_circle(x, y, l)
+
+    d = l * 0.1
+    xq = (l - d) * np.cos(angle) + x
+    yq = (l - d) * np.sin(angle) + y
+
+    xk = xq - d * np.sin(angle)
+    yk = yq + d * np.cos(angle)
+
+    xh = xq + d * np.sin(angle)
+    yh = yq - d * np.cos(angle)
+
+    pyglet.graphics.draw(3, GL_TRIANGLES,
+                         ('v2f', (x2, y2, xk, yk, xh, yh)),
+                         ('c3B', (0, 0, 255, 0, 0, 255, 0, 0, 255)))
+
     return [x2, y2]
 
 
