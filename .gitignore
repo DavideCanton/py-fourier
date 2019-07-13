@@ -2,7 +2,4 @@ __pycache__/
 *.py[cod]
 *$py.class
 .idea/
-Include/
-Lib/
-Scripts/
-tcl/
+venv/
